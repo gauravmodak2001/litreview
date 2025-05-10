@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Automated Literature Review System{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-4">📚 Automated Literature Review System</h1>
+        <p class="lead">Generate comprehensive literature reviews on any research topic with AI assistance.</p>
+        <hr class="my-4">
+        <p>This system searches for relevant academic papers, extracts their content, filters based on relevance, and generates a well-structured literature review.</p>
+        <a href="{{ url_for('review') }}" class="btn btn-primary btn-lg">Start New Review</a>
+        <a href="{{ url_for('about') }}" class="btn btn-secondary btn-lg">Learn More</a>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">🔍 Search & Retrieve</h5>
+                <p class="card-text">Automatically searches across multiple academic databases to find relevant papers and retrieves their full text when available.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">🔎 Filter & Assess</h5>
+                <p class="card-text">Intelligently filters papers based on relevance to your topic, ensuring only the most appropriate sources are included.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">📝 Summarize & Synthesize</h5>
+                <p class="card-text">Generates a comprehensive literature review that synthesizes findings across papers and identifies key themes and research gaps.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5">
+    <h2>Get Started</h2>
+    <p>Ready to begin your literature review? Click the button below to start a new review on your research topic.</p>
+    <form action="{{ url_for('review') }}" method="get">
+        <button type="submit" class="btn btn-primary">Start New Review</button>
+    </form>
+</div>
+{% endblock %}

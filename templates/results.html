@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block title %}Literature Review Results{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Literature Review: {{ topic }}</h1>
+    <a href="{{ url_for('review') }}" class="btn btn-primary">Start New Review</a>
+</div>
+
+<!-- Literature Review Content -->
+<div class="card mb-5">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs" id="reviewTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="true">Literature Review</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="papers-tab" data-bs-toggle="tab" data-bs-target="#papers" type="button" role="tab" aria-controls="papers" aria-selected="false">Source Papers</button>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="tab-content" id="reviewTabsContent">
+            <!-- Literature Review Tab -->
+            <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+                <div class="review-content">
+                    {{ literature_review | safe }}
+                </div>
+            </div>
+            
+            <!-- Source Papers Tab -->
+            <div class="tab-pane fade" id="papers" role="tabpanel" aria-labelledby="papers-tab">
+                {% if papers|length > 0 %}
+                    <div class="row">
+                        {% for paper in papers %}
+                            <div class="col-md-6 mb-3">
+                                <div class="card paper-card h-100">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title mb-0 text-truncate">{{ paper.title }}</h5>
+                                        <span class="badge bg-relevance">{{ "%.2f"|format(paper.relevance_score) }}</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            <strong>Authors:</strong> {{ paper.authors|join(', ') }} <br>
+                                            {% if paper.year %}
+                                                <strong>Year:</strong> {{ paper.year }} <br>
+                                            {% endif %}
+                                            {% if paper.venue %}
+                                                <strong>Venue:</strong> {{ paper.venue }} <br>
+                                            {% endif %}
+                                            <strong>Abstract:</strong> {{ paper.abstract[:200] }}...
+                                        </p>
+                                        {% if paper.url %}
+                                            <a href="{{ paper.url }}" class="btn btn-sm btn-outline-secondary" target="_blank">View Source</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        Source paper details are not available.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Download Options -->
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Download Options</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="d-grid">
+                    <button class="btn btn-outline-primary" onclick="window.print()">
+                        <i class="bi bi-printer"></i> Print Literature Review
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-grid">
+                    <a href="#" class="btn btn-outline-secondary" onclick="downloadReview()">
+                        <i class="bi bi-download"></i> Download as Text
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function downloadReview() {
+    // Get the review content
+    const reviewContent = document.querySelector('.review-content').innerText;
+    
+    // Create a blob with the review content
+    const blob = new Blob([reviewContent], { type: 'text/plain' });
+    
+    // Create a download link
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = "literature_review_{{ topic|replace(' ', '_') }}.txt";
+    
+    // Trigger the download
+    document.body.appendChild(a);
+    a.click();
+    
+    // Clean up
+    setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }, 0);
+}
+</script>
+{% endblock %}

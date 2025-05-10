@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}About the Automated Literature Review System{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">About the Automated Literature Review System</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h2>Overview</h2>
+        <p>
+            The Automated Literature Review System is a modular Python application designed to streamline the literature review process for researchers and students. 
+            It leverages AI and natural language processing techniques to search for relevant academic papers, extract their content, assess their relevance, 
+            and generate comprehensive literature reviews on any research topic.
+        </p>
+        <p>
+            This system aims to save researchers time and effort by automating the tedious aspects of literature reviews while providing high-quality, 
+            structured summaries of existing research.
+        </p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h2 class="mb-0">How It Works</h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Step 1: Search & Retrieve</h3>
+                <p>
+                    The system uses a SearchAgent to find relevant academic papers across multiple sources including Google Scholar, arXiv, 
+                    ResearchGate, and other academic databases. For each paper, it extracts basic metadata like title, authors, abstract, and publication details.
+                </p>
+                <p>
+                    Then, a ContentRetrievalAgent attempts to retrieve the full text of each paper when available, along with additional information 
+                    such as keywords and citation counts.
+                </p>
+            </div>
+            <div class="col-md-6">
+                <h3>Step 2: Filter & Analyze</h3>
+                <p>
+                    A FilterAgent assesses each paper's relevance to the specified research topic and assigns a relevance score. 
+                    Papers below a certain relevance threshold are filtered out to ensure the review focuses on the most pertinent literature.
+                </p>
+                <p>
+                    The papers are then sorted by relevance, with the most relevant sources prioritized for inclusion in the final review.
+                </p>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <h3>Step 3: Generate Literature Review</h3>
+                <p>
+                    Finally, a SummaryAgent synthesizes information from all the filtered papers to generate a comprehensive literature review. 
+                    This includes:
+                </p>
+                <ul>
+                    <li>An introduction to the research topic and its importance</li>
+                    <li>Overview of major themes and findings in the literature</li>
+                    <li>Analysis of research methodologies used across papers</li>
+                    <li>Synthesis of key findings and their implications</li>
+                    <li>Identification of research gaps and future directions</li>
+                    <li>A conclusion summarizing the state of the field</li>
+                    <li>References to all included papers</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h2 class="mb-0">Technology Stack</h2>
+    </div>
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <strong>Backend:</strong> Python, Flask
+            </li>
+            <li class="list-group-item">
+                <strong>AI Components:</strong> LangChain, Ollama language models, browser-use agent
+            </li>
+            <li class="list-group-item">
+                <strong>Frontend:</strong> HTML, CSS, Bootstrap 5
+            </li>
+            <li class="list-group-item">
+                <strong>Data Storage:</strong> JSON for paper metadata and review storage
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="mb-0">Limitations & Considerations</h2>
+    </div>
+    <div class="card-body">
+        <p>
+            While the Automated Literature Review System is a powerful tool, it has some limitations to be aware of:
+        </p>
+        <ul>
+            <li>Access to papers behind paywalls may be limited</li>
+            <li>The quality of results depends on the availability and accessibility of relevant papers online</li>
+            <li>The system works best for academic topics with sufficient published literature</li>
+            <li>Processing time varies based on the number of papers and their complexity</li>
+            <li>The AI-generated review should be reviewed by a human researcher for accuracy and completeness</li>
+        </ul>
+        <p>
+            This system is designed to assist researchers, not replace critical thinking or expert knowledge in the field.
+        </p>
+    </div>
+</div>
+{% endblock %}
